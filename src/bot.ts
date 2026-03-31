@@ -1,20 +1,20 @@
-// src/bot.ts — saves every incoming message to SharePoint
+// src/bot.ts — saves every incoming message to a daily file in SharePoint
 import { ActivityHandler, TurnContext } from "botbuilder";
 import { getJsonFromSharePoint, uploadJsonToSharePoint } from "./graph";
 
-const MESSAGES_PATH = "01_PROJECT_STATE/Messages.json";
-
-interface SavedMessage {
-  id: string;
-  conversationId: string;
-  from: string;
-  aadObjectId?: string;
-  text: string;
-  timestamp: string;
+interface MessageEntry {
+  user: string;
+  time: string;
+  message: string;
 }
 
 function stripMentions(text: string) {
   return (text || "").replace(/<at>.*?<\/at>/g, "").trim();
+}
+
+function todayFileName(): string {
+  const date = new Date().toISOString().slice(0, 10); // 2026-04-01
+  return `${date}.json`;
 }
 
 export class MessageLogBot extends ActivityHandler {
@@ -28,20 +28,19 @@ export class MessageLogBot extends ActivityHandler {
         return;
       }
 
-      const entry: SavedMessage = {
-        id: context.activity.id ?? crypto.randomUUID(),
-        conversationId: context.activity.conversation?.id ?? "unknown",
-        from: context.activity.from?.name ?? "Unknown",
-        aadObjectId: (context.activity.from as any)?.aadObjectId,
-        text,
-        timestamp: new Date().toISOString(),
+      const entry: MessageEntry = {
+        user: context.activity.from?.name ?? "Unknown",
+        time: new Date().toISOString(),
+        message: text,
       };
 
+      const filePath = todayFileName();
+
       try {
-        const existing = await getJsonFromSharePoint<SavedMessage[]>(MESSAGES_PATH, []);
+        const existing = await getJsonFromSharePoint<MessageEntry[]>(filePath, []);
         existing.push(entry);
-        await uploadJsonToSharePoint(MESSAGES_PATH, existing);
-        await context.sendActivity(`Message saved.`);
+        await uploadJsonToSharePoint(filePath, existing);
+        await context.sendActivity("Message saved.");
       } catch (e: any) {
         console.error("Failed to save message:", e);
         await context.sendActivity("Failed to save message to SharePoint.");

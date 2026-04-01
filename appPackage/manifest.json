@@ -2,9 +2,9 @@
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.24/MicrosoftTeams.schema.json",
     "manifestVersion": "1.24",
     "version": "1.0.0",
-    "id": "c5ede896-3d85-434c-8d3b-e567abf14dae",
+    "id": "e5ccb243-6964-4d8e-a47e-d343a33d10fc",
     "developer": {
-        "name": "My App, Inc.",
+        "name": "TESTA MOTARI Automotive GmbH",
         "websiteUrl": "https://www.example.com",
         "privacyUrl": "https://www.example.com/privacy",
         "termsOfUseUrl": "https://www.example.com/termofuse"
@@ -14,17 +14,17 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "TM-PM-01",
-        "full": "TM-PM-01 AI Project Manager"
+        "short": "Maro-Bot",
+        "full": "Maro-Bot Message Logger"
     },
     "description": {
-        "short": "short description for Enter",
-        "full": "full description for Enter"
+        "short": "Saves messages to SharePoint",
+        "full": "A Teams bot that logs messages to daily files in SharePoint"
     },
     "accentColor": "#FFFFFF",
     "bots": [
         {
-            "botId": "c5ede896-3d85-434c-8d3b-e567abf14dae",
+            "botId": "e5ccb243-6964-4d8e-a47e-d343a33d10fc",
             "scopes": [
                 "personal",
                 "team",
@@ -34,17 +34,13 @@
             "isNotificationOnly": false,
             "commandLists": [
                 {
-                  "scopes": ["personal", "team", "groupChat"],
-                  "commands": [
-                      {
-                          "title": "Hi",
-                          "description": "Say hi to the bot."
-                      },
-                      {
-                          "title": "/reset",
-                          "description": "Delete conversation state."
-                      }
-                  ]
+                    "scopes": ["personal", "team", "groupChat"],
+                    "commands": [
+                        {
+                            "title": "Hi",
+                            "description": "Say hi to the bot."
+                        }
+                    ]
                 }
             ]
         }

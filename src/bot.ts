@@ -40,10 +40,8 @@ export class MessageLogBot extends ActivityHandler {
         const existing = await getJsonFromSharePoint<MessageEntry[]>(filePath, []);
         existing.push(entry);
         await uploadJsonToSharePoint(filePath, existing);
-        await context.sendActivity("Message saved.");
       } catch (e: any) {
         console.error("Failed to save message:", e);
-        await context.sendActivity("Failed to save message to SharePoint.");
       }
 
       await next();

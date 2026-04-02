@@ -52,5 +52,19 @@
         "identity",
         "messageTeamMembers"
     ],
-    "validDomains": []
+    "validDomains": [],
+    "webApplicationInfo": {
+        "id": "e5ccb243-6964-4d8e-a47e-d343a33d10fc",
+        "resource": ""
+    },
+    "authorization": {
+        "permissions": {
+            "resourceSpecific": [
+                {
+                    "name": "ChannelMessage.Read.Group",
+                    "type": "Application"
+                }
+            ]
+        }
+    }
 }
